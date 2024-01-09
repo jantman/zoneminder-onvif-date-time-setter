@@ -10,7 +10,7 @@ import os
 import argparse
 import logging
 from urllib.parse import urljoin, urlparse
-from typing import Dict
+from typing import Dict, Optional
 import importlib.resources
 from datetime import datetime, timezone
 
@@ -65,12 +65,14 @@ class ZmOnvifDateTimeSetter:
         self.tz_str: str = now.strftime('GMT%:z')
         logger.info('Using local timezone: %s', self.tz_str)
 
-    def run(self, fail_fast: bool = False):
+    def run(self, fail_fast: bool = False, only_mon_id: Optional[int] = None):
         monitors: Dict[str, str] = self._list_monitors()
         logger.debug('Got %d monitors: %s', len(monitors), monitors)
         failed: int = 0
         success: int = 0
         for mon_id, host in sorted(monitors.items()):
+            if only_mon_id and mon_id != only_mon_id:
+                continue
             try:
                 self._handle_camera(mon_id, host)
                 success += 1
@@ -184,6 +186,10 @@ def parse_args(argv):
         '-D', '--dry_run', dest='dry_run', action='store_true',
         default=False, help='Log what would be done but do not change anything'
     )
+    p.add_argument(
+        '-M', '--only-monitor-id', dest='only_mon_id', action='store',
+        type=int, default=None, help='Only set for this one monitor ID'
+    )
     args = p.parse_args(argv)
     return args
 
@@ -223,4 +229,6 @@ if __name__ == "__main__":
     else:
         set_log_info(logger)
 
-    ZmOnvifDateTimeSetter(dry_run=args.dry_run).run(fail_fast=args.fail_fast)
+    ZmOnvifDateTimeSetter(dry_run=args.dry_run).run(
+        fail_fast=args.fail_fast, only_mon_id=args.only_mon_id
+    )
