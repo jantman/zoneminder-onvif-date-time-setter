@@ -1,4 +1,4 @@
-# zondeminder-onvif-date-time-setter
+# zoneminder-onvif-date-time-setter
 
 Python script (and Docker container) to connect to ZoneMinder API and set date/time on all monitors via ONVIF
 
@@ -28,8 +28,8 @@ Note that this script **requires** Python 3.12 or newer, for the `%:z` format op
 
 First, export the environment variables listed above.
 
-For help: ``docker run -it --rm -v /etc/localtime:/etc/localtime -e ZM_API_URL -e ONVIF_USERNAME -e ONVIF_PASSWORD jantman/zondeminder-onvif-date-time-setter:latest -h``
+For help: ``docker run -it --rm -v /etc/localtime:/etc/localtime -e ZM_API_URL -e ONVIF_USERNAME -e ONVIF_PASSWORD jantman/zoneminder-onvif-date-time-setter:latest -h``
 
-For a dry run, without making any changes: ``docker run -it --rm -v /etc/localtime:/etc/localtime -e ZM_API_URL -e ONVIF_USERNAME -e ONVIF_PASSWORD jantman/zondeminder-onvif-date-time-setter:latest -D``
+For a dry run, without making any changes: ``docker run -it --rm -v /etc/localtime:/etc/localtime -e ZM_API_URL -e ONVIF_USERNAME -e ONVIF_PASSWORD jantman/zoneminder-onvif-date-time-setter:latest -D``
 
-To actually set the date and time: ``docker run -it --rm -v /etc/localtime:/etc/localtime -e ZM_API_URL -e ONVIF_USERNAME -e ONVIF_PASSWORD jantman/zondeminder-onvif-date-time-setter:latest``
+To actually set the date and time: ``docker run -it --rm -v /etc/localtime:/etc/localtime -e ZM_API_URL -e ONVIF_USERNAME -e ONVIF_PASSWORD jantman/zoneminder-onvif-date-time-setter:latest``
