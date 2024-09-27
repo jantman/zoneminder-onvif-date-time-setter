@@ -101,7 +101,7 @@ class ZmOnvifDateTimeSetter:
         )
         cam: ONVIFCamera = ONVIFCamera(
             host=host, port=80, user=self.onvif_user, passwd=self.onvif_pass,
-            wsdl_dir=self.wsdl_dir
+            wsdl_dir=self.wsdl_dir, adjust_time=True
         )
         hostname: str = cam.devicemgmt.GetHostname().Name
         logger.debug('Connected to camera with hostname %s', hostname)
