@@ -168,6 +168,12 @@ class ZmOnvifDateTimeSetter:
         r.raise_for_status()
         res = {}
         for row in r.json()['monitors']:
+            if row['Monitor']['Function'] == "None":
+                logger.info('Skipping monitor %s with Function set to None', row['Monitor']['Id'])
+                continue
+            if row['Monitor']['Enabled'] != 1:
+                logger.info('Skipping disabled monitor %s', row['Monitor']['Id'])
+                continue
             res[row['Monitor']['Id']] = urlparse(row['Monitor']['Path']).hostname
         return res
 
